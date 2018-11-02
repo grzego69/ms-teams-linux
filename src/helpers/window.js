@@ -39,10 +39,12 @@ export default function(name, options) {
   };
 
   const windowWithinBounds = function(windowState, bounds) {
-    return windowState.x >= bounds.x &&
+    return (
+      windowState.x >= bounds.x &&
       windowState.y >= bounds.y &&
       windowState.x + windowState.width <= bounds.x + bounds.width &&
-      windowState.y + windowState.height <= bounds.y + bounds.height;
+      windowState.y + windowState.height <= bounds.y + bounds.height
+    );
   };
 
   const resetToDefaults = function() {
@@ -69,7 +71,9 @@ export default function(name, options) {
     if (!win.isMinimized() && !win.isMaximized()) {
       Object.assign(state, getCurrentPosition());
     }
-    userDataDir.write(stateStoreFile, state, { atomic: true });
+    userDataDir.write(stateStoreFile, state, {
+      atomic: true,
+    });
   };
 
   state = ensureVisibleOnSomeDisplay(restore());
