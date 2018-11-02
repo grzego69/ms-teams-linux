@@ -4,7 +4,7 @@ import compareVersions from 'compare-versions';
 
 export default function checkUpdate(showModal = false) {
   fetch(
-    'https://api.github.com/repos/karmainside/ms-teams-linux/releases/latest'
+    'https://api.github.com/repos/grzego69/ms-teams-linux-next/releases/latest'
   )
     .then(function(response) {
       return response.json();
