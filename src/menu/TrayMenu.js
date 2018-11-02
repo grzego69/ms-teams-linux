@@ -11,12 +11,13 @@ const TrayMenu = Menu.buildFromTemplate([
     label: 'Reload',
     click: () => {
       BrowserWindow.fromId(1).show();
-      BrowserWindow.getFocusedWindow().webContents.reloadIgnoringCache();
+      BrowserWindow.fromId(1).webContents.reloadIgnoringCache();
     },
   },
   {
     label: 'Quit',
     click: () => {
+      BrowserWindow.fromId(1).hide();
       app.quit();
     },
   },

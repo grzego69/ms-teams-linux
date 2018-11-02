@@ -108,6 +108,7 @@ app.on('ready', () => {
   mainWindow.webContents.on('context-menu', (event, props) =>
     HandleRightClick(event, props, mainWindow)
   );
+  global.mainWindow = mainWindow;
 });
 
 app.on('window-all-closed', () => {
