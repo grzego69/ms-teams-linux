@@ -1,14 +1,14 @@
 {
-  "name": "ms-teams-capsule",
+  "name": "ms-teams-capsule-next",
   "productName": "Microsoft Teams Capsule",
-  "description": "Microsoft Teams Capsule allows to run MS Teams web version as a standalone app",
-  "version": "0.5.2",
-  "author": "Vadzim Miashaikin <karmainside@gmail.com>",
-  "copyright": "© 2017, Vadzim Miashaikin",
+  "description": "Microsoft Teams Capsule allows to run MS Teams web version as a standalone app. It's based on: https://github.com/karmainside/ms-teams-linux ",
+  "version": "1.0.0",
+  "author": "Adam Grzegorzewski <grzego69@gmail.com>",
+  "copyright": "© 2018, Adam Grzegorzewski",
   "license": "MIT",
   "main": "app/background.js",
   "build": {
-    "appId": "com.karmainsie.ms-teams-capsule",
+    "appId": "com.grzego69.ms-teams-capsule-next",
     "files": [
       "app/**/*",
       "node_modules/**/*",

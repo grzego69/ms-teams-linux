@@ -3,7 +3,7 @@ import openAboutWindow from 'about-window';
 
 const copyrightText = `
 <center>
-    Copyright (c) 2017 karmainside <hr />
+    Copyright (c) 2018 grzego69 <hr />
     Microsoft, Microsoft Teams, Microsoft Teams logo are either registered trademarks or trademarks of Microsoft Corporation in the United States and/or other countries.<hr />
 </center>
 `;
