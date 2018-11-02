@@ -13,11 +13,14 @@ gulp.task('bundle', () =>
   Promise.all([
     bundle(srcDir.path('background.js'), destDir.path('background.js')),
     bundle(srcDir.path('app.js'), destDir.path('app.js')),
-  ]));
+  ])
+);
 
 gulp.task('environment', () => {
   const configFile = `config/env_${utils.getEnvName()}.json`;
-  projectDir.copy(configFile, destDir.path('env.json'), { overwrite: true });
+  projectDir.copy(configFile, destDir.path('env.json'), {
+    overwrite: true,
+  });
 });
 
 gulp.task('watch', () => {

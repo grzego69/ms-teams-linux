@@ -13,7 +13,9 @@ var generateEntryFile = function(dir, destFileName, filePattern) {
     '// All modifications will be lost.\n';
 
   return dir
-    .findAsync('.', { matching: filePattern })
+    .findAsync('.', {
+      matching: filePattern,
+    })
     .then(function(specPaths) {
       var fileContent = specPaths
         .map(function(path) {
