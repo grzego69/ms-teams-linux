@@ -60,17 +60,18 @@ app.on('ready', () => {
   );
 
   mainWindow.loadURL('https://teams.microsoft.com/');
-  console.log(mainWindow.id);
+
+  //minimize window to tray on click
+  appIcon.on('click', () => {
+    if (mainWindow.isVisible()) {
+      mainWindow.hide();
+    } else {
+      mainWindow.show();
+    }
+  });
 
   mainWindow.on('page-title-updated', (event, title) => {
     if (title.match(notifRegex)) {
-      // notifier.notify({
-      //     title: 'Microsoft Teams for Linux',
-      //     message: 'You have new chat message!',
-      //     icon: iconPath.appDefault,
-      //     wait: true
-      //
-      // });
       appIcon.setImage(iconPath.unread);
       mainWindow.setIcon(iconPath.appUnread);
       mainWindow.flashFrame(true);
@@ -80,10 +81,6 @@ app.on('ready', () => {
       mainWindow.flashFrame(false);
     }
   });
-
-  // notifier.on('click', function (notifierObject, options) {
-  //     mainWindow.restore();
-  // });
 
   if (env.name === 'development') {
     mainWindow.openDevTools();
