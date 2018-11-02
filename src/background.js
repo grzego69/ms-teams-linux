@@ -6,13 +6,13 @@ import HelpMenu from './menu/HelpMenu';
 import TrayMenu from './menu/TrayMenu';
 import HandleRightClick from './menu/RightClick';
 import createWindow from './helpers/window';
-import { checkUpdate } from './helpers/updater';
+import checkUpdate from './helpers/updater';
 
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
 import env from './env';
 
-const notifRegex = '\([0-9]+\).*?';
+const notifRegex = '([0-9]+).*?';
 
 let appIcon = null;
 const iconPath = {
@@ -109,7 +109,8 @@ app.on('ready', () => {
   mainWindow.webContents.on('will-navigate', handleRedirect);
   mainWindow.webContents.on('new-window', handleRedirect);
   mainWindow.webContents.on('context-menu', (event, props) =>
-    HandleRightClick(event, props, mainWindow));
+    HandleRightClick(event, props, mainWindow)
+  );
 });
 
 app.on('window-all-closed', () => {
