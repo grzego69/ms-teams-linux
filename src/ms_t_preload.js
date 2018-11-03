@@ -1,48 +1,56 @@
 import { remote } from 'electron';
 
+var personClassName = 'title app-max-2-lines-base';
+var messageClassName = 'toast-channel message';
+var mainWindow = remote.getGlobal('mainWindow');
+
+function displayToast(person, message) {
+  //Notification
+  var title = person;
+
+  var options = {
+    body: message,
+    icon: document.querySelector('link[rel="icon"]').href,
+    requireInteraction: true,
+  };
+
+  var notification = new Notification(title, options);
+  notification.onclick = function() {
+    mainWindow.show();
+  };
+}
+
+function getElementValue(node, className) {
+  var value = node.getElementsByClassName(className)[0].innerHTML;
+
+  return value;
+}
+
+function isMessageElement(node) {
+  var result =
+    (' ' + node.className + ' ').indexOf(
+      ' ' + 'ts-toast-default toast-wrapper' + ' '
+    ) > -1;
+
+  return result;
+}
+
 document.addEventListener(
   'DOMContentLoaded',
   () => {
-    //todo: check if loaded once and refactor
     var foo = document.getElementsByTagName('body')[0];
-    var mainWindow = remote.getGlobal('mainWindow');
+
     var observer = new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
         for (var i = 0; i < mutation.addedNodes.length; i++) {
           var node = mutation.addedNodes[i];
 
-          if (node.nodeType != 1) {
-            // not Node.ELEMENT_NODE
-            continue;
-          }
-
           if (node.classList !== undefined) {
-            if (
-              (' ' + node.className + ' ').indexOf(
-                ' ' + 'ts-toast-default toast-wrapper' + ' '
-              ) > -1
-            ) {
-              var person = node.getElementsByClassName(
-                'title app-max-2-lines-base'
-              )[0].innerHTML;
+            if (isMessageElement(node)) {
+              var person = getElementValue(node, personClassName);
+              var message = getElementValue(node, messageClassName);
 
-              var message = node.getElementsByClassName(
-                'toast-channel message'
-              )[0].innerHTML;
-
-              //Notification
-              var title = person;
-
-              var options = {
-                body: message,
-                icon: document.querySelector('link[rel="icon"]').href,
-                requireInteraction: true,
-              };
-
-              var notification = new Notification(title, options);
-              notification.onclick = function() {
-                mainWindow.show();
-              };
+              displayToast(person, message);
             }
           }
         }
