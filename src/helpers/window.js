@@ -27,7 +27,7 @@ export default function(name, options) {
     return Object.assign({}, defaultSize, restoredState);
   };
 
-  /*const getCurrentPosition = function() {
+  const getCurrentPosition = function() {
     const position = win.getPosition();
     const size = win.getSize();
     return {
@@ -36,7 +36,7 @@ export default function(name, options) {
       width: size[0],
       height: size[1],
     };
-  };*/
+  };
 
   const windowWithinBounds = function(windowState, bounds) {
     return (
@@ -67,14 +67,14 @@ export default function(name, options) {
     return windowState;
   };
 
-  /*const saveState = function() {
+  const saveState = function() {
     if (!win.isMinimized() && !win.isMaximized()) {
       Object.assign(state, getCurrentPosition());
     }
     userDataDir.write(stateStoreFile, state, {
       atomic: true,
     });
-  };*/
+  };
 
   state = ensureVisibleOnSomeDisplay(restore());
 
@@ -86,6 +86,8 @@ export default function(name, options) {
       win.hide();
     }
   });
+
+  win.on('move', saveState);
 
   return win;
 }
