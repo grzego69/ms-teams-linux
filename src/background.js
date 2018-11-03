@@ -47,8 +47,11 @@ app.on('ready', () => {
     width: 1000,
     height: 600,
     webPreferences: {
+      pageVisibility: true,
+      backgroundThrottling: false,
       partition: 'persist:teams',
       nodeIntegration: false,
+      preload: path.join(__dirname, 'ms_t_preload.js'),
     },
     icon: iconPath.appDefault,
   });

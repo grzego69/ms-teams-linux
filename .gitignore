@@ -9,6 +9,7 @@ Thumbs.db
 /app/app.js
 /app/background.js
 /app/env.json
+/app/ms_t_preload.js
 /app/**/*.map
 
 /dist
