@@ -1,4 +1,4 @@
-import { remote } from 'electron';
+import { remote, ipcRenderer } from 'electron';
 
 var personClassName = 'title app-max-2-lines-base';
 var messageClassName = 'toast-channel message';
@@ -50,6 +50,21 @@ function isToastElement(node) {
   return result;
 }
 
+ipcRenderer.on('simMouseClickTeams', function() {
+  if (document !== undefined) {
+    var teamButton = document.getElementById('app-bar-3');
+    var evt = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+    // If cancelled, don't dispatch our event
+    if (teamButton !== null) {
+      teamButton.dispatchEvent(evt);
+    }
+  }
+});
+
 document.addEventListener(
   'DOMContentLoaded',
   () => {
@@ -66,7 +81,7 @@ document.addEventListener(
             if (isTypingElement(node) || isToastElement(node)) {
               if (!mainWindow.isVisible()) {
                 mainWindow.show();
-                mainWindow.blur();
+                mainWindow.minimize();
               }
             }
 
