@@ -35,6 +35,21 @@ function isMessageElement(node) {
   return result;
 }
 
+function isTypingElement(node) {
+  var result =
+    (' ' + node.className + ' ').indexOf(' ' + 'ts-typing-indicator' + ' ') >
+    -1;
+
+  return result;
+}
+
+function isToastElement(node) {
+  var result =
+    (' ' + node.className + ' ').indexOf(' ' + 'toast-bottom-right' + ' ') > -1;
+
+  return result;
+}
+
 document.addEventListener(
   'DOMContentLoaded',
   () => {
@@ -45,7 +60,16 @@ document.addEventListener(
         for (var i = 0; i < mutation.addedNodes.length; i++) {
           var node = mutation.addedNodes[i];
 
-          if (node.classList !== undefined) {
+          if (node.className !== undefined) {
+            //process.stdout.write("added_node_class: " + node.className + "\n");
+
+            if (isTypingElement(node) || isToastElement(node)) {
+              if (!mainWindow.isVisible()) {
+                mainWindow.show();
+                mainWindow.blur();
+              }
+            }
+
             if (isMessageElement(node)) {
               var person = getElementValue(node, personClassName);
               var message = getElementValue(node, messageClassName);
