@@ -14,8 +14,8 @@ Application also offers notifications for unread messages.
 Applications is distributed in the AppImage format and should run on all common Linux distributions.
 
 1. Download installation file
-  * using direct link: [AppImage](https://github.com/grzego69/ms-teams-linux-next/releases/download/1.0.0/ms-teams-capsule-1.0.0-x86_64.AppImage)
-  * using wget: `$ wget https://github.com/grzego69/ms-teams-linux-next/releases/download/1.0.0/ms-teams-capsule-1.0.0-x86_64.AppImage`
+  * using direct link: [AppImage](https://github.com/grzego69/ms-teams-linux-next/releases/download/1.0.0/ms-teams-capsule-next-1.0.0-x86_64.AppImage)
+  * using wget: `$ wget https://github.com/grzego69/ms-teams-linux-next/releases/download/1.0.0/ms-teams-capsule-next-1.0.0-x86_64.AppImage`
 
 2. Make it executable
   * `$ chmod a+x ms-teams-capsule*.AppImage`
