@@ -68,7 +68,7 @@ ipcRenderer.on('simMouseClickTeams', function() {
 document.addEventListener(
   'DOMContentLoaded',
   () => {
-    var foo = document.getElementsByTagName('body')[0];
+    var bodyElement = document.getElementsByTagName('body')[0];
 
     var observer = new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
@@ -96,7 +96,7 @@ document.addEventListener(
       });
     });
 
-    observer.observe(foo, {
+    observer.observe(bodyElement, {
       childList: true,
       subtree: true,
     });
