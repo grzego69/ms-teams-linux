@@ -11,9 +11,13 @@ import checkUpdate from './helpers/updater';
 // in config/env_xxx.json file.
 import env from './env';
 
-const notifRegex = '([0-9]+).*?';
-
+var prevTitle = '';
+var deleteDotOnFocus = false;
 let appIcon = null;
+
+// Regex pattern for notifications title
+const notifRegex = '^\\([0-9]+\\).*?';
+
 const iconPath = {
   default: path.join(__dirname, 'icon-32x32.png'),
   unread: path.join(__dirname, 'icon-32x32-unread.png'),
@@ -70,15 +74,27 @@ app.on('ready', () => {
     }
   });
 
-  mainWindow.on('page-title-updated', (event, title) => {
-    if (title.match(notifRegex)) {
-      appIcon.setImage(iconPath.unread);
-      mainWindow.setIcon(iconPath.appUnread);
-      mainWindow.flashFrame(true);
-    } else {
+  mainWindow.on('focus', () => {
+    if (deleteDotOnFocus) {
       appIcon.setImage(iconPath.default);
       mainWindow.setIcon(iconPath.appDefault);
-      mainWindow.flashFrame(false);
+      deleteDotOnFocus = false;
+    }
+  });
+
+  mainWindow.on('page-title-updated', (event, title) => {
+    if (title !== '' && prevTitle !== title) {
+      prevTitle = title;
+
+      if (title.match(notifRegex)) {
+        appIcon.setImage(iconPath.unread);
+        mainWindow.setIcon(iconPath.appUnread);
+      } else if (mainWindow.isVisible() && !mainWindow.isMinimized()) {
+        appIcon.setImage(iconPath.default);
+        mainWindow.setIcon(iconPath.appDefault);
+      } else {
+        deleteDotOnFocus = true;
+      }
     }
   });
 
