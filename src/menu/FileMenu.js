@@ -14,6 +14,7 @@ const FileMenu = {
       label: 'Quit',
       accelerator: 'CmdOrCtrl+Q',
       click: () => {
+        BrowserWindow.getFocusedWindow().hide();
         app.quit();
       },
     },
