@@ -8,7 +8,7 @@ const options = {
   title: 'Delete cache and config',
   message: 'Do you want to do this?',
   detail:
-    'Your configuration data and cache will be deleted.\nThe application will also be restarted.',
+    'Your configuration data and cache will be deleted.\nThe application will also be closed.',
 };
 
 const FileMenu = {
@@ -36,7 +36,7 @@ const FileMenu = {
             if (response == 0) {
               mainWindow.webContents.session.clearStorageData();
               mainWindow.webContents.session.clearCache(function() {});
-              app.relaunch();
+              //app.relaunch(); // TODO: not work
               app.exit(0);
             }
           }
