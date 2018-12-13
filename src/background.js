@@ -18,6 +18,8 @@ let appIcon = null;
 // Regex pattern for notifications title
 const notifRegex = '^\\([0-9]+\\).*?';
 
+const ipcMain = require('electron').ipcMain;
+
 const iconPath = {
   default: path.join(__dirname, 'icon-32x32.png'),
   unread: path.join(__dirname, 'icon-32x32-unread.png'),
@@ -58,6 +60,13 @@ app.on('ready', () => {
   });
 
   checkUpdate();
+
+  // Listen for notification events.
+  ipcMain.on('notification-shim', () => {
+    if (!mainWindow.isVisible()) {
+      mainWindow.minimize();
+    }
+  });
 
   mainWindow.webContents.setUserAgent(
     'Mozilla/5.0 (X11, Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240'
