@@ -7,7 +7,6 @@ import TrayMenu from './menu/TrayMenu';
 import HandleRightClick from './menu/RightClick';
 import createWindow from './helpers/window';
 import checkUpdate from './helpers/updater';
-
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
 import env from './env';
@@ -47,8 +46,6 @@ app.on('ready', () => {
     width: 1000,
     height: 600,
     webPreferences: {
-      pageVisibility: true,
-      backgroundThrottling: false,
       partition: 'persist:teams',
       nodeIntegration: false,
       preload: path.join(__dirname, 'ms_t_preload.js'),
