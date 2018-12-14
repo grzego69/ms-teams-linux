@@ -17,7 +17,3 @@ console.log(
   'The author of this app is:',
   appDir.read('package.json', 'json').author
 );
-
-document.addEventListener('DOMContentLoaded', () => {
-  // DO something
-});

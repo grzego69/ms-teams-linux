@@ -83,14 +83,8 @@ export default function(name, options) {
   win.on('close', event => {
     if (win.isVisible()) {
       event.preventDefault();
-      win.webContents.send('simMouseClickTeams');
       win.hide();
     }
-  });
-
-  win.on('minimize', event => {
-    event.preventDefault();
-    win.webContents.send('simMouseClickTeams');
   });
 
   win.on('move', saveState);

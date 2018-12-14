@@ -1,0 +1,26 @@
+1.0.1:
+
+ Improvements:
+ 
+ - Direct calling to people works
+ - Videocall works
+ - Added button to delete cache and configuration files
+ - Added go to specific message on popup click
+ - Added opening of a specific message after clicking on the popup
+ - Performance improvements
+ 
+ Fixed:
+ 
+ - The red dot of notifications is displayed only when the message is not read
+ - Fixed application highlighting on the system bar
+ - The "Quit" button on the application toolbar works correctly
+
+ 
+1.0.0:
+
+ Improvements:
+ 
+ - Show-hide application has been added after clicking the icon on a tray icon
+ - The application is hiding to the tray after clicking the close (x) button
+ - Notifications on the desktop have been added
+ - Performance improvements

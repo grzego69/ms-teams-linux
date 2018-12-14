@@ -7,14 +7,19 @@ import TrayMenu from './menu/TrayMenu';
 import HandleRightClick from './menu/RightClick';
 import createWindow from './helpers/window';
 import checkUpdate from './helpers/updater';
-
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
 import env from './env';
 
-const notifRegex = '([0-9]+).*?';
-
+var prevTitle = '';
+var deleteDotOnFocus = false;
 let appIcon = null;
+
+// Regex pattern for notifications title
+const notifRegex = '^\\([0-9]+\\).*?';
+
+const ipcMain = require('electron').ipcMain;
+
 const iconPath = {
   default: path.join(__dirname, 'icon-32x32.png'),
   unread: path.join(__dirname, 'icon-32x32-unread.png'),
@@ -47,8 +52,6 @@ app.on('ready', () => {
     width: 1000,
     height: 600,
     webPreferences: {
-      pageVisibility: true,
-      backgroundThrottling: false,
       partition: 'persist:teams',
       nodeIntegration: false,
       preload: path.join(__dirname, 'ms_t_preload.js'),
@@ -58,8 +61,15 @@ app.on('ready', () => {
 
   checkUpdate();
 
+  // Listen for notification events.
+  ipcMain.on('notification-shim', () => {
+    if (!mainWindow.isVisible()) {
+      mainWindow.minimize();
+    }
+  });
+
   mainWindow.webContents.setUserAgent(
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'
+    'Mozilla/5.0 (X11, Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240'
   );
 
   mainWindow.loadURL('https://teams.microsoft.com/');
@@ -73,15 +83,27 @@ app.on('ready', () => {
     }
   });
 
-  mainWindow.on('page-title-updated', (event, title) => {
-    if (title.match(notifRegex)) {
-      appIcon.setImage(iconPath.unread);
-      mainWindow.setIcon(iconPath.appUnread);
-      mainWindow.flashFrame(true);
-    } else {
+  mainWindow.on('focus', () => {
+    if (deleteDotOnFocus) {
       appIcon.setImage(iconPath.default);
       mainWindow.setIcon(iconPath.appDefault);
-      mainWindow.flashFrame(false);
+      deleteDotOnFocus = false;
+    }
+  });
+
+  mainWindow.on('page-title-updated', (event, title) => {
+    if (title !== '' && prevTitle !== title) {
+      prevTitle = title;
+
+      if (title.match(notifRegex)) {
+        appIcon.setImage(iconPath.unread);
+        mainWindow.setIcon(iconPath.appUnread);
+      } else if (mainWindow.isVisible() && !mainWindow.isMinimized()) {
+        appIcon.setImage(iconPath.default);
+        mainWindow.setIcon(iconPath.appDefault);
+      } else {
+        deleteDotOnFocus = true;
+      }
     }
   });
 
