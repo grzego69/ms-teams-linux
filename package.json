@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "ajv": "^6.6.1",
-    "electron": "^3.0.11",
+    "electron": "^2.0.15",
     "electron-builder": "^20.38.3",
     "electron-notification-shim": "^1.1.0",
     "eslint": "^5.10.0",
