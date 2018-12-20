@@ -90,22 +90,18 @@ app.on('ready', () => {
   mainWindow.on('focus', () => {
     if (deleteDotOnFocus) {
       appIcon.setImage(iconPath.default);
-      mainWindow.setIcon(iconPath.appDefault);
       deleteDotOnFocus = false;
     }
   });
-
   mainWindow.on('page-title-updated', (event, title) => {
     if (title !== '' && prevTitle !== title) {
       if (title.match(notifRegex)) {
         appIcon.setImage(iconPath.unread);
-        mainWindow.setIcon(iconPath.appUnread);
         if (!prevTitle.match(notifRegex)) {
           mainWindow.flashFrame(true);
         }
       } else if (mainWindow.isVisible() && !mainWindow.isMinimized()) {
         appIcon.setImage(iconPath.default);
-        mainWindow.setIcon(iconPath.appDefault);
       } else {
         deleteDotOnFocus = true;
       }
