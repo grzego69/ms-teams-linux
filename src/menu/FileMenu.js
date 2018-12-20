@@ -41,7 +41,6 @@ const FileMenu = {
               var currentFile = process.env.APPIMAGE;
               var currentFileEsc = currentFile.replace(/'/g, "'\\''");
               var cmd = `( exec '${currentFileEsc}' ) & disown $!`;
-              console.log(process.pid);
               mainWindow.hide();
               app.quit();
               spawn(
