@@ -42,7 +42,8 @@
     "compare-versions": "^3.4.0",
     "fs-jetpack": "^2.2.0",
     "electron-notification-shim": "^1.1.0",
-    "node-fetch": "^2.3.0"
+    "node-fetch": "^2.3.0",
+    "node-wget": "^0.4.3"
   },
   "devDependencies": {
     "ajv": "^6.6.1",
