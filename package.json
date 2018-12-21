@@ -1,6 +1,6 @@
 {
   "name": "ms-teams-capsule-next",
-  "productName": "Microsoft_Teams_Capsule",
+  "productName": "Microsoft Teams Capsule",
   "description": "Microsoft Teams Capsule allows to run MS Teams web version as a standalone app. It's based on: https://github.com/karmainside/ms-teams-linux ",
   "version": "1.0.1",
   "author": "Adam Grzegorzewski <grzego69@gmail.com>",
@@ -9,14 +9,15 @@
   "main": "app/mainApp.js",
   "build": {
     "appId": "com.grzego69.ms-teams-capsule-next",
-    "artifactName": "${name}-${version}-x86_64.${ext}",
+    "artifactName": "${name}-x86_64.${ext}",
     "files": [
       "app/**/*",
       "node_modules/**/*",
       "package.json"
     ],
     "appImage": {
-      "category": "Network"
+      "category": "Network",
+      "systemIntegration": "doNotAsk"
     }
   },
   "scripts": {
