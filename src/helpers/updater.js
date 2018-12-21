@@ -10,11 +10,16 @@ const spawn = require('child_process').spawn;
 
 var wget = require('node-wget');
 
+const fs = require('fs');
+
+var rimraf = require('rimraf');
+
 var mainWindow;
 
 var messageWindow;
 
-function applyUpdate(oldAppPath, newAppPath) {
+function applyUpdate(oldAppPath, newAppPath, updateFolder, appFolder) {
+  var newAppPathAfterMove = appFolder + path.basename(newAppPath);
   dialog.showMessageBox(
     messageWindow,
     {
@@ -29,11 +34,13 @@ function applyUpdate(oldAppPath, newAppPath) {
     response => {
       if (response == 0) {
         var cmd = `rm -f '${oldAppPath}';
-                   chmod +x '${newAppPath}';
+                   mv '${newAppPath}' '${newAppPathAfterMove}';
+                   chmod +x '${newAppPathAfterMove}';
                    rm /usr/share/applications/appimagekit-ms-teams*.desktop &> /dev/null;
                    rm /usr/local/share/applications/appimagekit-ms-teams*.desktop &> /dev/null;
                    rm ~/.local/share/applications/appimagekit-ms-teams*.desktop &> /dev/null;
-                   ( exec '${newAppPath}' ) & disown $!`;
+                   rm -rf ${updateFolder};
+                   ( exec '${newAppPathAfterMove}' ) & disown $!`;
 
         mainWindow.hide();
         app.quit();
@@ -51,7 +58,7 @@ function applyUpdate(oldAppPath, newAppPath) {
           }
         );
       } else if (response == 1) {
-        spawn('/bin/bash', ['-c', `rm -f ${newAppPath}`], {
+        spawn('/bin/bash', ['-c', `rm -rf ${updateFolder}`], {
           detached: true,
         });
       }
@@ -64,6 +71,7 @@ function downloadUpdate(jsonResponse, modal) {
   var newAppPath;
   var newAppURL;
   var appFolder;
+  var updateFolder;
 
   var i;
   for (i = 0; i < jsonResponse.assets.length; i++) {
@@ -72,47 +80,59 @@ function downloadUpdate(jsonResponse, modal) {
       jsonResponse.assets[i].content_type.includes('appimage')
     ) {
       appFolder = path.dirname(process.env.APPIMAGE) + '/';
+      updateFolder = appFolder + 'update/';
       oldAppPath = process.env.APPIMAGE.replace(/'/g, "'\\''");
-      newAppPath = (appFolder + jsonResponse.assets[i].name).replace(
+      newAppPath = (updateFolder + jsonResponse.assets[i].name).replace(
         /'/g,
         "'\\''"
       );
       newAppURL = jsonResponse.assets[i].browser_download_url;
 
-      wget(
-        {
-          url: newAppURL,
-          dest: appFolder, // destination path or path with filenname, default is ./
-          timeout: 60000, // duration to wait for request fulfillment in milliseconds, default is 2 seconds
-        },
-        function(error) {
-          if (error) {
-            spawn('/bin/bash', ['-c', `rm -f ${newAppPath}`], {
-              detached: true,
-            });
-
-            dialog.showMessageBox(
-              messageWindow,
+      rimraf(updateFolder, () => {
+        fs.mkdir(
+          updateFolder,
+          {
+            recursive: true,
+          },
+          () => {
+            wget(
               {
-                type: 'question',
-                buttons: ['Yes, please', 'No!!!'],
-                defaultId: 1,
-                cancelId: 1,
-                title: 'ERROR',
-                message: 'Unexpected error while downloading Update',
-                detail: 'Do you want to open website and update manually?',
+                url: newAppURL,
+                dest: updateFolder, // destination path or path with filenname, default is ./
+                timeout: 60000, // duration to wait for request fulfillment in milliseconds, default is 2 seconds
               },
-              response => {
-                if (response == 0) {
-                  shell.openExternal(modal.url);
+              function(error) {
+                if (error) {
+                  spawn('/bin/bash', ['-c', `rm -f ${newAppPath}`], {
+                    detached: true,
+                  });
+
+                  dialog.showMessageBox(
+                    messageWindow,
+                    {
+                      type: 'question',
+                      buttons: ['Yes, please', 'No!!!'],
+                      defaultId: 1,
+                      cancelId: 1,
+                      title: 'ERROR',
+                      message: 'Unexpected error while downloading Update',
+                      detail:
+                        'Do you want to open website and update manually?',
+                    },
+                    response => {
+                      if (response == 0) {
+                        shell.openExternal(modal.url);
+                      }
+                    }
+                  );
+                } else {
+                  applyUpdate(oldAppPath, newAppPath, updateFolder, appFolder);
                 }
               }
             );
-          } else {
-            applyUpdate(oldAppPath, newAppPath);
           }
-        }
-      );
+        );
+      });
     }
   }
 }

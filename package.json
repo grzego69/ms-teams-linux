@@ -44,7 +44,8 @@
     "fs-jetpack": "^2.2.0",
     "electron-notification-shim": "^1.1.0",
     "node-fetch": "^2.3.0",
-    "node-wget": "^0.4.3"
+    "node-wget": "^0.4.3",
+    "rimraf": "^2.6.2"
   },
   "devDependencies": {
     "ajv": "^6.6.1",
