@@ -6,7 +6,7 @@
   "author": "Adam Grzegorzewski <grzego69@gmail.com>",
   "copyright": "© 2018, Adam Grzegorzewski",
   "license": "MIT",
-  "main": "app/background.js",
+  "main": "app/mainApp.js",
   "build": {
     "appId": "com.grzego69.ms-teams-capsule-next",
     "artifactName": "${name}-${version}-x86_64.${ext}",

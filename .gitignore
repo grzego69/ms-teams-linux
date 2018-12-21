@@ -7,7 +7,7 @@ Thumbs.db
 # ignore everything in 'app' folder what had been generated from 'src' folder
 /app/stylesheets
 /app/app.js
-/app/background.js
+/app/mainApp.js
 /app/env.json
 /app/ms_t_preload.js
 /app/**/*.map
