@@ -2,6 +2,8 @@ import path from 'path';
 import openAboutWindow from 'about-window';
 import checkUpdate from '../helpers/updater';
 
+var mainWindow;
+
 const copyrightText = `
 <center>
     Copyright (c) 2018 grzego69 <hr />
@@ -15,7 +17,8 @@ const HelpMenu = {
     {
       label: 'About',
       accelerator: 'F1',
-      click: () =>
+      click: () => {
+        mainWindow = global.mainWindow;
         openAboutWindow({
           icon_path: path.join(__dirname, 'icon-256x256.png'),
           description:
@@ -24,8 +27,13 @@ const HelpMenu = {
           copyright: copyrightText,
           use_inner_html: true,
           adjust_window_size: true,
-          win_options: false,
-        }),
+          win_options: {
+            parent: mainWindow,
+            alwaysOnTop: true,
+            show: true,
+          },
+        });
+      },
     },
     {
       label: 'Check for updates...',
