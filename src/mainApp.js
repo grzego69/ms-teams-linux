@@ -59,7 +59,7 @@ app.on('ready', () => {
     icon: iconPath.appDefault,
   });
 
-  checkUpdate();
+  global.mainWindow = mainWindow;
 
   // Listen for notification events.
   ipcMain.on('notification-shim', () => {
@@ -135,7 +135,7 @@ app.on('ready', () => {
   mainWindow.webContents.on('context-menu', (event, props) =>
     HandleRightClick(event, props, mainWindow)
   );
-  global.mainWindow = mainWindow;
+  checkUpdate();
 });
 
 app.on('window-all-closed', () => {

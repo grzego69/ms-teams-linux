@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import { app, dialog, BrowserWindow, shell } from 'electron';
+import { app, dialog, shell } from 'electron';
 
 import compareVersions from 'compare-versions';
 
@@ -136,7 +136,7 @@ function downloadUpdate(jsonResponse, modal) {
 }
 
 export default function checkUpdate(showModal = false) {
-  mainWindow = BrowserWindow.getFocusedWindow();
+  mainWindow = global.mainWindow;
 
   fetch(
     'https://api.github.com/repos/grzego69/ms-teams-linux-next/releases/latest'
@@ -169,6 +169,8 @@ export default function checkUpdate(showModal = false) {
             message: modal.message,
             alwaysOnTop: true,
             focusable: false,
+            defaultId: 0,
+            cancelId: 1,
           },
           function(buttonIndex) {
             if (modal.new && buttonIndex === 0) {
