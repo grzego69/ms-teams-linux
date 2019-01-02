@@ -25,6 +25,7 @@ function applyUpdate(oldAppPath, newAppPath, updateFolder, appFolder) {
       buttons: ['Yes, please', 'No!!!'],
       defaultId: 1,
       cancelId: 1,
+      alwaysOnTop: true,
       title: 'Update',
       message: 'Do you want to do update now?',
       detail: 'Update is downloaded.\nThe application will also be restarted.',
@@ -112,6 +113,7 @@ function downloadUpdate(jsonResponse, modal) {
                       buttons: ['Yes, please', 'No!!!'],
                       defaultId: 1,
                       cancelId: 1,
+                      alwaysOnTop: true,
                       title: 'ERROR',
                       message: 'Unexpected error while downloading Update',
                       detail:
