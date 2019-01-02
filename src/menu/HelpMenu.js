@@ -19,6 +19,15 @@ const HelpMenu = {
       accelerator: 'F1',
       click: () => {
         mainWindow = global.mainWindow;
+
+        const size = mainWindow.getSize();
+        const position = mainWindow.getPosition();
+
+        var width = size[0];
+        var height = size[1];
+        var x = Math.round(position[0] + width / 2.7);
+        var y = Math.round(position[1] + height / 6);
+
         openAboutWindow({
           icon_path: path.join(__dirname, 'icon-256x256.png'),
           description:
@@ -26,11 +35,13 @@ const HelpMenu = {
           license: 'MIT',
           copyright: copyrightText,
           use_inner_html: true,
-          adjust_window_size: true,
           win_options: {
             parent: mainWindow,
             alwaysOnTop: true,
-            show: true,
+            x: x,
+            y: y,
+            width: 400,
+            height: 450,
           },
         });
       },
