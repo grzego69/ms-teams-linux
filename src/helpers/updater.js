@@ -16,12 +16,10 @@ var rimraf = require('rimraf');
 
 var mainWindow;
 
-var messageWindow;
-
 function applyUpdate(oldAppPath, newAppPath, updateFolder, appFolder) {
   var newAppPathAfterMove = appFolder + path.basename(newAppPath);
   dialog.showMessageBox(
-    messageWindow,
+    mainWindow,
     {
       type: 'question',
       buttons: ['Yes, please', 'No!!!'],
@@ -108,7 +106,7 @@ function downloadUpdate(jsonResponse, modal) {
                   });
 
                   dialog.showMessageBox(
-                    messageWindow,
+                    mainWindow,
                     {
                       type: 'question',
                       buttons: ['Yes, please', 'No!!!'],
@@ -138,11 +136,7 @@ function downloadUpdate(jsonResponse, modal) {
 }
 
 export default function checkUpdate(showModal = false) {
-  messageWindow = new BrowserWindow({
-    show: false,
-  });
-
-  messageWindow.setAlwaysOnTop(true);
+  mainWindow = BrowserWindow.getFocusedWindow();
 
   fetch(
     'https://api.github.com/repos/grzego69/ms-teams-linux-next/releases/latest'
@@ -151,8 +145,6 @@ export default function checkUpdate(showModal = false) {
       return response.json();
     })
     .then(function(jsonResponse) {
-      mainWindow = BrowserWindow.getFocusedWindow();
-
       const modal = {
         buttons: ['Ok'],
         message: 'You are using the latest version (' + app.getVersion() + ')',
@@ -169,7 +161,7 @@ export default function checkUpdate(showModal = false) {
 
       if (modal.new || showModal) {
         dialog.showMessageBox(
-          messageWindow,
+          mainWindow,
           {
             title: 'UPDATE',
             type: 'info',
