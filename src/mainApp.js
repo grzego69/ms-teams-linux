@@ -54,7 +54,7 @@ app.on('ready', () => {
     webPreferences: {
       partition: 'persist:teams',
       nodeIntegration: false,
-      preload: path.join(__dirname, 'ms_t_preload.js'),
+      preload: path.join(__dirname, 'preload.js'),
     },
     icon: iconPath.appDefault,
   });

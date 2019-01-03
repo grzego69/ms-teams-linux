@@ -32,27 +32,25 @@ const FileMenu = {
           },
           response => {
             if (response == 0) {
-              if (response == 0) {
-                mainWindow.webContents.session.clearStorageData();
-                mainWindow.webContents.session.clearCache(function() {});
-                var currentFile = process.env.APPIMAGE;
-                var currentFileEsc = currentFile.replace(/'/g, "'\\''");
-                var cmd = `( exec '${currentFileEsc}' ) & disown $!`;
-                mainWindow.hide();
-                app.quit();
-                spawn(
-                  '/bin/bash',
-                  [
-                    '-c',
-                    `while ps ${process.pid} >/dev/null 2>&1; do kill -9 ${
-                      process.pid
-                    }; sleep 0.1; done; ${cmd}`,
-                  ],
-                  {
-                    detached: true,
-                  }
-                );
-              }
+              mainWindow.webContents.session.clearStorageData();
+              mainWindow.webContents.session.clearCache(function() {});
+              var currentFile = process.env.APPIMAGE;
+              var currentFileEsc = currentFile.replace(/'/g, "'\\''");
+              var cmd = `( exec '${currentFileEsc}' ) & disown $!`;
+              mainWindow.hide();
+              app.quit();
+              spawn(
+                '/bin/bash',
+                [
+                  '-c',
+                  `while ps ${process.pid} >/dev/null 2>&1; do kill -9 ${
+                    process.pid
+                  }; sleep 0.1; done; ${cmd}`,
+                ],
+                {
+                  detached: true,
+                }
+              );
             }
           }
         );

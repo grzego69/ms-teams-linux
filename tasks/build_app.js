@@ -12,7 +12,7 @@ const destDir = jetpack.cwd('./app');
 gulp.task('bundle', () =>
   Promise.all([
     bundle(srcDir.path('mainApp.js'), destDir.path('mainApp.js')),
-    bundle(srcDir.path('ms_t_preload.js'), destDir.path('ms_t_preload.js')),
+    bundle(srcDir.path('preload.js'), destDir.path('preload.js')),
   ])
 );
 
