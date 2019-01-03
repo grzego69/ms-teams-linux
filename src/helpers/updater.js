@@ -154,7 +154,7 @@ export default function checkUpdate(showModal = false) {
         new: false,
       };
 
-      if (compareVersions(jsonResponse.tag_name, app.getVersion()) === 0) {
+      if (compareVersions(jsonResponse.tag_name, app.getVersion()) === 1) {
         modal.buttons = ['Prepare update', 'Not now'];
         modal.message = 'New version is available: ' + jsonResponse.tag_name;
         modal.url = jsonResponse.html_url;
