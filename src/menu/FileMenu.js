@@ -1,5 +1,7 @@
 import { app, BrowserWindow, dialog } from 'electron';
 
+const spawn = require('child_process').spawn;
+
 const options = {
   type: 'question',
   buttons: ['Yes, please', 'No!!!'],
@@ -8,7 +10,7 @@ const options = {
   title: 'Delete cache and config',
   message: 'Do you want to do this?',
   detail:
-    'Your configuration data and cache will be deleted.\nThe application will also be closed.',
+    'Your configuration data and cache will be deleted.\nThe application will also be restarted.',
 };
 
 const FileMenu = {
@@ -36,8 +38,24 @@ const FileMenu = {
             if (response == 0) {
               mainWindow.webContents.session.clearStorageData();
               mainWindow.webContents.session.clearCache(function() {});
-              //app.relaunch(); // TODO: not work
-              app.exit(0);
+              var currentFile = process.env.APPIMAGE;
+              var currentFileEsc = currentFile.replace(/'/g, "'\\''");
+              var cmd = `( exec '${currentFileEsc}' ) & disown $!`;
+              console.log(process.pid);
+              mainWindow.hide();
+              app.quit();
+              spawn(
+                '/bin/bash',
+                [
+                  '-c',
+                  `while ps ${process.pid} >/dev/null 2>&1; do kill -9 ${
+                    process.pid
+                  }; sleep 0.1; done; ${cmd}`,
+                ],
+                {
+                  detached: true,
+                }
+              );
             }
           }
         );
