@@ -41,13 +41,13 @@
     "about-window": "^1.12.1",
     "compare-versions": "^3.4.0",
     "fs-jetpack": "^2.2.0",
+    "electron-notification-shim": "^1.1.0",
     "node-fetch": "^2.3.0"
   },
   "devDependencies": {
     "ajv": "^6.6.1",
     "electron": "^2.0.16",
     "electron-builder": "^20.38.3",
-    "electron-notification-shim": "^1.1.0",
     "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.3.0",
