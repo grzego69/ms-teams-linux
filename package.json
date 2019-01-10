@@ -16,8 +16,9 @@
       "package.json"
     ],
     "appImage": {
-      "category": "Network"
-    }
+     "category": "Network",
+     "systemIntegration": "doNotAsk"
+   }
   },
   "scripts": {
     "postinstall": "install-app-deps electron-builder install-app-deps",
