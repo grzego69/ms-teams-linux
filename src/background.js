@@ -68,6 +68,10 @@ app.on('ready', () => {
     }
   });
 
+  ipcMain.on('errorInWindow', function() {
+    mainWindow.webContents.reloadIgnoringCache();
+  });
+
   mainWindow.webContents.setUserAgent(
     'Mozilla/5.0 (X11, Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240'
   );
