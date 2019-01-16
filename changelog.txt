@@ -1,3 +1,16 @@
+1.0.2:
+
+ Improvements:
+ 
+ - Application restart after clearing the cache
+ - A prompt for integration with the operating system has been removed
+ 
+ Fixed:
+ 
+ - Reload the application if it blocks during startup
+ - Flashing frame after receiving the message
+ - Show-hide the application after clicking the icon on a tray icon
+
 1.0.1:
 
  Improvements:
