@@ -1,7 +1,7 @@
 # Microsoft Teams Capsule - unofficial Microsoft Teams app for Linux
 
 ## Latest release
-**1.0.1** - 14 Dec 2018
+**1.0.2** - 17 Jan 2019
 
 ## Description
 Microsoft Teams Capsule is unofficial Microsoft Teams application for Linux, which uses [electron framework](http://electron.atom.io/) to wrap web version of [Microsoft Teams](https://teams.microsoft.com/).
@@ -14,8 +14,8 @@ Application also offers notifications for unread messages.
 Applications is distributed in the AppImage format and should run on all common Linux distributions.
 
 1. Download installation file
-  * using direct link: [AppImage](https://github.com/grzego69/ms-teams-linux-next/releases/download/1.0.1/ms-teams-capsule-next-1.0.1-x86_64.AppImage)
-  * using wget: `$ wget https://github.com/grzego69/ms-teams-linux-next/releases/download/1.0.1/ms-teams-capsule-next-1.0.1-x86_64.AppImage`
+  * using direct link: [AppImage](https://github.com/grzego69/ms-teams-linux-next/releases/download/1.0.2/ms-teams-capsule-next-1.0.2-x86_64.AppImage)
+  * using wget: `$ wget https://github.com/grzego69/ms-teams-linux-next/releases/download/1.0.2/ms-teams-capsule-next-1.0.2-x86_64.AppImage`
 
 2. Make it executable
   * `$ chmod a+x ms-teams-capsule*.AppImage`
@@ -27,7 +27,7 @@ You can also get more information about AppImage on the [official website](http:
 
 ## Uninstalling
 
-1. Delete the "ms-teams-capsule-next-<version>-x86_64.AppImage" file from your system.
+1. Delete the "ms-teams-capsule-next-\<version>\-x86_64.AppImage" file from your system.
 
 2. Remove shortcuts from the system. You can use this script (run with "sudo"): [DeleteShortcutsSH](https://github.com/grzego69/ms-teams-linux-next/releases/download/1.0.1/delete_app_shortcuts_run_with_sudo.sh)
 
