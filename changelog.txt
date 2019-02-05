@@ -1,3 +1,8 @@
+1.0.3:
+ 
+ Fixed:
+ - Loop when logging in
+
 1.0.2:
 
  Improvements:
