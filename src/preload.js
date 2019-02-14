@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 
-const blockingError = "TypeError: Cannot read property 'send' of undefined";
+const blockingError1 = "TypeError: Cannot read property 'send' of undefined";
+const blockingError2 = "TypeError: Cannot read property 'on' of undefined";
 
 require('electron-notification-shim')();
 
@@ -21,7 +22,7 @@ var console = (function(oldCons) {
         oldCons.error(text);
       }
 
-      if (text && text.includes(blockingError)) {
+      if (text && text.includes(blockingError1 || blockingError2)) {
         ipcRenderer.send('errorInWindow');
       }
     },
