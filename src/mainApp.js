@@ -1,10 +1,10 @@
 import path from 'path';
 import { app, Menu, Tray, shell } from 'electron';
-import DevelopmentMenuTemplateMenu from './menu/DevelopmentMenuTemplateMenu';
-import FileMenu from './menu/FileMenu';
-import HelpMenu from './menu/HelpMenu';
-import TrayMenu from './menu/TrayMenu';
-import HandleRightClick from './menu/RightClick';
+import DevelopmentMenuTemplateMenu from './menu/developmentMenuTemplateMenu';
+import FileMenu from './menu/fileMenu';
+import HelpMenu from './menu/helpMenu';
+import TrayMenu from './menu/trayMenu';
+import HandleRightClick from './menu/rightClick';
 import createWindow from './helpers/window';
 import checkUpdate from './helpers/updater';
 // Special module holding environment variables which you declared
@@ -54,7 +54,7 @@ app.on('ready', () => {
     webPreferences: {
       partition: 'persist:teams',
       nodeIntegration: false,
-      preload: path.join(__dirname, 'ms_t_preload.js'),
+      preload: path.join(__dirname, 'preload.js'),
     },
     icon: iconPath.appDefault,
   });
