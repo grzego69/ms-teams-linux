@@ -2,17 +2,6 @@ import { app, BrowserWindow, dialog } from 'electron';
 
 const spawn = require('child_process').spawn;
 
-const options = {
-  type: 'question',
-  buttons: ['Yes, please', 'No!!!'],
-  defaultId: 1,
-  cancelId: 1,
-  title: 'Delete cache and config',
-  message: 'Do you want to do this?',
-  detail:
-    'Your configuration data and cache will be deleted.\nThe application will also be restarted.',
-};
-
 const deleteCacheAndConfig = function() {
   var mainWindow = BrowserWindow.fromId(1);
   mainWindow.webContents.session.clearStorageData();
@@ -50,12 +39,20 @@ const FileMenu = {
       label: 'Delete cache and config',
       accelerator: 'CmdOrCtrl+D',
       click: () => {
+        var mainWindow = BrowserWindow.getFocusedWindow();
+
         dialog.showMessageBox(
-          new BrowserWindow({
-            show: false,
-            alwaysOnTop: true,
-          }),
-          options,
+          mainWindow,
+          {
+            type: 'question',
+            buttons: ['Yes, please', 'No!!!'],
+            defaultId: 1,
+            cancelId: 1,
+            title: 'Delete cache and config',
+            message: 'Do you want to do this?',
+            detail:
+              'Your configuration data and cache will be deleted.\nThe application will also be restarted.',
+          },
           response => {
             if (response == 0) {
               deleteCacheAndConfig();
