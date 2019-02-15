@@ -1,7 +1,7 @@
 import path from 'path';
 import { app, Menu, Tray, shell } from 'electron';
 import DevelopmentMenuTemplateMenu from './menu/developmentMenuTemplateMenu';
-import FileMenu from './menu/fileMenu';
+import FileMenu, { deleteCacheAndConfig } from './menu/fileMenu';
 import HelpMenu from './menu/helpMenu';
 import TrayMenu from './menu/trayMenu';
 import HandleRightClick from './menu/rightClick';
@@ -13,6 +13,7 @@ import env from './env';
 
 var prevTitle = '';
 var deleteDotOnFocus = false;
+var errorCount = 0;
 let appIcon = null;
 
 // Regex pattern for notifications title
@@ -69,7 +70,12 @@ app.on('ready', () => {
   });
 
   ipcMain.on('errorInWindow', function() {
-    mainWindow.webContents.reloadIgnoringCache();
+    errorCount++;
+    if (errorCount < 3) {
+      mainWindow.webContents.reloadIgnoringCache();
+    } else if (errorCount == 3) {
+      deleteCacheAndConfig();
+    }
   });
 
   mainWindow.webContents.setUserAgent(

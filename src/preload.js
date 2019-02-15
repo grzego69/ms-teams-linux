@@ -20,10 +20,12 @@ var console = (function(oldCons) {
     error: function(text) {
       if (text) {
         oldCons.error(text);
-      }
-
-      if (text && text.includes(blockingError1 || blockingError2)) {
-        ipcRenderer.send('errorInWindow');
+        if (
+          text &&
+          (text.includes(blockingError1) || text.includes(blockingError2))
+        ) {
+          ipcRenderer.send('errorInWindow');
+        }
       }
     },
   };
