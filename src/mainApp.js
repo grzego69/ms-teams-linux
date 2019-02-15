@@ -60,6 +60,24 @@ app.on('ready', () => {
     icon: iconPath.appDefault,
   });
 
+  var shouldQuit = app.makeSingleInstance(function() {
+    // Someone tried to run a second instance, we should focus our window.
+    if (mainWindow) {
+      if (!mainWindow.isVisible()) {
+        mainWindow.show();
+      } else if (mainWindow.isMinimized()) {
+        mainWindow.restore();
+      }
+      mainWindow.focus();
+    }
+  });
+
+  if (shouldQuit) {
+    mainWindow.hide();
+    app.quit();
+    return;
+  }
+
   checkUpdate();
 
   // Listen for notification events.
