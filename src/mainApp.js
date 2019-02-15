@@ -79,7 +79,7 @@ app.on('ready', () => {
   });
 
   mainWindow.webContents.setUserAgent(
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14931'
+    'Mozilla/5.0 (Intel Mac OS X 10_12_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Chrome/71.0.3578.98 Edge/19.17763'
   );
 
   mainWindow.loadURL('https://teams.microsoft.com/');
