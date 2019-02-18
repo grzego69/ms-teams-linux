@@ -1,3 +1,15 @@
+1.1.0:
+
+ Improvements:
+ 
+ - Removed request to install a desktop application
+ - Prevention of running multiple instances of the application
+ - Pop-up windows are always above the main window
+ 
+ Fixed:
+ 
+ - Crashing during startup (automatically re-loading the application)
+
 1.0.3:
  
  Fixed:
