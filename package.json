@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "ajv": "^6.9.1",
-    "electron": "^2.0.17",
+    "electron": "^2.0.18",
     "electron-builder": "^20.38.5",
     "eslint": "^5.14.0",
     "eslint-config-airbnb-base": "^13.1.0",
