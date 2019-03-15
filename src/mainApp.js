@@ -15,6 +15,7 @@ var prevTitle = '';
 var deleteDotOnFocus = false;
 var errorCount = 0;
 let appIcon = null;
+let mainWindow = null;
 
 // Regex pattern for notifications title
 const notifRegex = '^\\([0-9]+\\).*?';
@@ -44,12 +45,28 @@ if (env.name !== 'production') {
   app.setPath('userData', `${userDataPath} (${env.name})`);
 }
 
+const instanceLock = app.requestSingleInstanceLock()
+if (!instanceLock) {
+  app.quit()
+}
+
+app.on('second-instance', () => {
+  if (mainWindow) {
+    if (!mainWindow.isVisible()) {
+      mainWindow.show();
+    } else if (mainWindow.isMinimized()) {
+      mainWindow.restore();
+    }
+    mainWindow.focus();
+  }
+});
+
 app.on('ready', () => {
   setApplicationMenu();
   appIcon = new Tray(iconPath.default);
   appIcon.setContextMenu(TrayMenu);
 
-  const mainWindow = createWindow('main', {
+  mainWindow = createWindow('main', {
     width: 1000,
     height: 600,
     webPreferences: {
@@ -59,24 +76,6 @@ app.on('ready', () => {
     },
     icon: iconPath.appDefault,
   });
-
-  var shouldQuit = app.makeSingleInstance(function() {
-    // Someone tried to run a second instance, we should focus our window.
-    if (mainWindow) {
-      if (!mainWindow.isVisible()) {
-        mainWindow.show();
-      } else if (mainWindow.isMinimized()) {
-        mainWindow.restore();
-      }
-      mainWindow.focus();
-    }
-  });
-
-  if (shouldQuit) {
-    mainWindow.hide();
-    app.quit();
-    return;
-  }
 
   checkUpdate();
 
