@@ -5,6 +5,7 @@ import {
 
 const blockingError1 = "TypeError: Cannot read property 'send' of undefined";
 const blockingError2 = "TypeError: Cannot read property 'on' of undefined";
+const blockingError3 = "Uncaught IPC object is null";
 
 require('electron-notification-shim')();
 
@@ -28,7 +29,7 @@ var console = (function(oldCons) {
         oldCons.error(text);
         if (
           text &&
-          (text.includes(blockingError1) || text.includes(blockingError2))
+          (text.includes(blockingError1) || text.includes(blockingError2) || text.includes(blockingError3))
         ) {
           ipcRenderer.send('errorInWindow');
         }
@@ -109,21 +110,24 @@ document.addEventListener(
   'DOMContentLoaded',
   () => {
 
-    runCallingObserver();
+    if (angular !== undefined) {
 
-    setTimeout(() => {
-      let injector = angular.element(document).injector();
+      runCallingObserver();
 
-      if (injector) {
-        enableChromeVideoAudioMeetings(injector);
-        disablePromoteStuff(injector);
+      setTimeout(() => {
+        let injector = angular.element(document).injector();
 
-        injector.get('settingsService').settingsService.refreshSettings();
+        if (injector) {
+          enableChromeVideoAudioMeetings(injector);
+          disablePromoteStuff(injector);
 
-      }
-      // Future tests can be done in here...
-      // angular.element(document).injector().get('settingsService').appConfig.replyBoxFocusAfterNewMessage = true;
-      //last I look is enableIncomingVideoUnsupportedUfd groing from down to up.
-    }, 3000);
+          injector.get('settingsService').settingsService.refreshSettings();
+
+        }
+        // Future tests can be done in here...
+        // angular.element(document).injector().get('settingsService').appConfig.replyBoxFocusAfterNewMessage = true;
+        //last I look is enableIncomingVideoUnsupportedUfd groing from down to up.
+      }, 3000);
+    }
   }
 );
