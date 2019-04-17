@@ -8,6 +8,9 @@ const blockingError2 = "TypeError: Cannot read property 'on' of undefined";
 
 require('electron-notification-shim')();
 
+// TODO: fix screenshare issues
+//require('./desktopShare/chromeApi');
+
 // define a new console
 var console = (function(oldCons) {
   return {
