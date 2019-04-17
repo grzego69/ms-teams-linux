@@ -1,4 +1,7 @@
-import { ipcRenderer } from 'electron';
+import {
+  ipcRenderer,
+  remote
+} from 'electron';
 
 const blockingError1 = "TypeError: Cannot read property 'send' of undefined";
 const blockingError2 = "TypeError: Cannot read property 'on' of undefined";
@@ -34,27 +37,6 @@ var console = (function(oldCons) {
 //Then redefine the old console
 window.console = console;
 
-document.addEventListener(
-  'DOMContentLoaded',
-  () => {
-
-    setTimeout(() => {
-      let injector = angular.element(document).injector();
-
-      if (injector) {
-        enableChromeVideoAudioMeetings(injector);
-        disablePromoteStuff(injector);
-
-        injector.get('settingsService').settingsService.refreshSettings();
-
-      }
-      // Future tests can be done in here...
-      // angular.element(document).injector().get('settingsService').appConfig.replyBoxFocusAfterNewMessage = true;
-      //last I look is enableIncomingVideoUnsupportedUfd groing from down to up.
-    }, 3000);
-  },
-);
-
 function enableChromeVideoAudioMeetings(injector) {
   injector.get('callingSupportService').oneOnOneCallingEnabled = true;
   injector.get('callingSupportService').isChromeMeetingSingleVideoEnabled = true;
@@ -78,3 +60,67 @@ function disablePromoteStuff(injector) {
   injector.get('settingsService').appConfig.hideGetAppButton = true;
   injector.get('settingsService').appConfig.enableMobileDownloadMailDialog = false;
 }
+
+function runCallingObserver() {
+
+  var foo = document.getElementsByTagName('body')[0];
+  var mainWindow = remote.getGlobal('mainWindow');
+
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+
+
+      for (var i = 0; i < mutation.addedNodes.length; i++) {
+
+        var node = mutation.addedNodes[i];
+
+        if (node.nodeType != 1) {
+          continue;
+        }
+
+        if (node.classList !== undefined) {
+          if (
+            (' ' + node.className + ' ').indexOf(
+              ' ' + 'toast-bottom-right' + ' '
+            ) > -1
+          ) {
+
+            if (!mainWindow.isVisible()) {
+              mainWindow.show();
+            }
+            if (!mainWindow.isFocused()) {
+              mainWindow.focus();
+            }
+          }
+        }
+      }
+    });
+  });
+  observer.observe(foo, {
+    childList: true,
+    subtree: true,
+  });
+}
+
+document.addEventListener(
+  'DOMContentLoaded',
+  () => {
+
+    runCallingObserver();
+
+    setTimeout(() => {
+      let injector = angular.element(document).injector();
+
+      if (injector) {
+        enableChromeVideoAudioMeetings(injector);
+        disablePromoteStuff(injector);
+
+        injector.get('settingsService').settingsService.refreshSettings();
+
+      }
+      // Future tests can be done in here...
+      // angular.element(document).injector().get('settingsService').appConfig.replyBoxFocusAfterNewMessage = true;
+      //last I look is enableIncomingVideoUnsupportedUfd groing from down to up.
+    }, 3000);
+  }
+);
